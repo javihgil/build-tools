@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="_common_targets" default="-empty">
+
+    <target name="-empty" hidden="true">
+        <echo message="Empty target for document validation"/>
+    </target>
+
+    <target name="init" hidden="true">
+        <echo message="Init project" />
+        <composr action="export" value="name" property="composer.name" />
+        <composr action="export" value="version" property="composer.version" />
+        <composr action="export" value="type" property="composer.type" />
+    </target>
+
+    <target name="info" depends="init">
+        <info show="property" property="composer.name"/>
+        <info show="property" property="composer.version"/>
+        <info show="property" property="composer.type"/>
+    </target>
+</project>
