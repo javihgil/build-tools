@@ -7,15 +7,19 @@
     </target>
 
     <target name="init" hidden="true">
+        <call target="-pre-init" required="false" />
         <echo message="Init project" />
         <composr action="export" value="name" property="composer.name" />
         <composr action="export" value="version" property="composer.version" />
         <composr action="export" value="type" property="composer.type" />
+        <call target="-post-init" required="false" />
     </target>
 
     <target name="info" depends="init">
+        <call target="-pre-info" required="false" />
         <info show="property" property="composer.name"/>
         <info show="property" property="composer.version"/>
         <info show="property" property="composer.type"/>
+        <call target="-post-info" required="false" />
     </target>
 </project>
