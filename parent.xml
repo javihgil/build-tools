@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="parent" default="info">
+    <target name="prepare" depends="init">
+    </target>
+
+    <target name="clear" depends="prepare">
+        <modulei action="phing" modulesrefid="modules" task="clear" />
+        <modulei action="summary" />
+        <modulei action="failatend" />
+    </target>
+
+    <target name="reset" depends="prepare">
+        <modulei action="phing" modulesrefid="modules" task="reset" />
+        <modulei action="summary" />
+        <modulei action="failatend" />
+    </target>
+
+    <target name="build" depends="prepare">
+        <modulei action="phing" modulesrefid="modules" task="build" />
+        <modulei action="summary" />
+        <modulei action="failatend" />
+    </target>
+
+    <target name="report" depends="prepare">
+        <modulei action="phing" modulesrefid="modules" task="report" />
+        <modulei action="summary" />
+    </target>
+
+    <target name="release" depends="build">
+        <fail unless="release.version" message="Missing release.version parameter" />
+        <fail unless="release.next.version" message="Missing release.next.version parameter" />
+
+        <modulei action="phing" modulesrefid="modules" task="module-release">
+            <arg value="-Drelease.version=${release.version}"/>
+            <arg value="-Drelease.next.version=${release.next.version}"/>
+        </modulei>
+        <modulei action="summary" />
+        <modulei action="failatend" />
+
+        <composr action="version-update" version="${release.version}" forceVersionType="release" />
+        <exec command="git add ." checkreturn="true" passthru="true" />
+        <exec command="git commit -m 'Phing release ${release.version}'" checkreturn="true" passthru="true" />
+        <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+        <exec command="git push --tags origin ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+
+        <modulei action="phing" modulesrefid="modules" task="release-next-version">
+            <arg value="-Drelease.next.version=${release.next.version}"/>
+        </modulei>
+        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
+
+        <exec command="git add ." checkreturn="true" passthru="true" />
+        <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
+        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+    </target>
+
+    <import file="tools/phing/_common_targets.xml"/>
+    <import file="tools/phing/_configuration.xml"/>
+    <import file="tools/phing/_includes.xml"/>
+
+</project>
