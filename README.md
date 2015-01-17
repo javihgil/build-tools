@@ -125,21 +125,29 @@ This project is usefull for building more than one project from the same GIT rep
 Parent *build.xml* file must include the *tools/parent.xml* file, and define it's modules:
 
 ```xml
-    <modules id="modules">
-        <module name="module1"/>
-        <module name="module2"/>
-    </modules>
-    
-    <import file="tools/parent.xml"/>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project name="project-name" default="info">
+        <modules id="modules">
+            <module name="module1"/>
+            <module name="module2"/>
+        </modules>
+        
+        <includepath classpath="tools" />
+        <import file="tools/parent.xml"/>
+    </project>
 ```
 
 Modules' *build.xml* files must extend other project configuration file (like *tools/project.xml*), 
 and set that it's a module.
 
 ```xml
-    <property name="module" value="true"/>
-    
-    <import file="../tools/project.xml"/>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project name="module-name" default="info">
+        <property name="module" value="true"/>
+        
+        <includepath classpath="../tools" />
+        <import file="../tools/project.xml"/>
+    </project>
 ```
 
 ### clear target
