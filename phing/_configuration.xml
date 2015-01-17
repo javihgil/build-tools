@@ -12,6 +12,11 @@
 
     <property name="private.repository" value="false"/>
     <property name="private.repository.driver" value=""/>
+    <property name="private.dependencies.regex" value=""/>
+
+    <property name="s3.build.bucket.path" value=""/>
+    <property name="s3.release.bucket.path" value=""/>
+    <property name="s3.cmd.bin" value="/usr/bin/s3cmd"/>
 
     <property name="phpunit.bin"    value="vendor/bin/phpunit"/>
     <property name="phplint.bin"    value="php"/>
