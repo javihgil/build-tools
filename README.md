@@ -39,17 +39,6 @@ This target initializes the build environment.
 
 By default, this target exports some composer.json variables.
  
-```xml
-    <target name="init" hidden="true">
-        <call target="-pre-init" required="false" />
-        <echo message="Init project" />
-        <composr action="export" value="name" property="composer.name" />
-        <composr action="export" value="version" property="composer.version" />
-        <composr action="export" value="type" property="composer.type" />
-        <call target="-post-init" required="false" />
-    </target>
-```
-
 **Extending**
 
 Execute actions before default init actions.
@@ -81,16 +70,6 @@ Override init target.
 Shows info about the project.
 
 This target has dependency on *init* target.
- 
-```xml
-    <target name="info" depends="init">
-        <call target="-pre-info" required="false" />
-        <info show="property" property="composer.name"/>
-        <info show="property" property="composer.version"/>
-        <info show="property" property="composer.type"/>
-        <call target="-post-info" required="false" />
-    </target>
-```
 
 **Executing**
 
