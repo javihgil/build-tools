@@ -101,13 +101,204 @@ Override init target.
     </target>
 ```
 
-## Project Building
+## Composer Project Building
+
+### clear target
+
+Clears project. Removes vendor, reports, build and release directories.
+
+**Depends on**
+
+- common init target
+
+**Execution**
+
+    $ phing clear
+
+### reset target
+
+Clears project. Removes target directory, composer's phar and lock files.
+
+**Depends on**
+
+- clear target
+
+**Execution**
+
+    $ phing reset
+
+### prepare target
+
+Prepares project for other target execution. Creates target directory and downloads (or self updates) 
+composer.phar file.
+
+**Depends on**
+
+- clear target
+
+**Execution**
+
+This is a *hidden* target, but can be executed using:
+
+    $ phing prepare
+
+### install target
+
+Executes composer install command. 
+
+It's possible to download previous some packages from private repository.
+
+**Depends on**
+
+- prepare target
+
+**Execution**
+
+    $ phing install
+
+**Usage of private repositories**
+
+    <property name="private.repository" value="true" />
+    <property name="private.repository.driver" value="s3" /> <!-- available drivers: s3 -->
+
+### test target
+
+Tests project. 
+
+**Depends on**
+
+- install target
+
+**Execution**
+
+    $ phing test
+
+**PHPunit test configuration**
+
+    <property name="test.phpunit" value="true" />
+    
+Default configuration
+    
+    <property name="phpunit.bin" value="vendor/bin/phpunit"/>
+    <property name="test.phpunit.config" value="phpunit.xml"/>
+    <property name="test.phpunit.failbuild" value="true"/>
+
+Include [phpunit](https://github.com/sebastianbergmann/phpunit) in composer.json
+    
+```json
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*"
+    },
+```
+
+**PHP Lint test configuration**
+
+    <property name="test.phplint" value="true" />
+    
+Default configuration
+    
+    <property name="phplint.bin" value="php"/>
+    <property name="test.phplint.failbuild" value="true"/>
+
+**Twig Lint test configuration**
+
+    <property name="test.twiglint" value="true" />
+    
+Default configuration
+    
+    <property name="twiglint.bin" value="vendor/bin/twig-lint"/>
+    <property name="test.twiglint.failbuild" value="true"/>
+
+Include [twiglint](https://github.com/asm89/twig-lint) in composer.json
+    
+```json
+    "require-dev": {
+        "asm89/twig-lint": "1.0.*"
+    },
+```
+
+### report target
+
+Tests project. 
+
+**Depends on**
+
+- install target
+
+**Execution**
+
+    $ phing report
+
+**PHPunit report configuration**
+
+    <property name="report.coverage" value="true" />
+    
+Default configuration
+    
+    <property name="phpunit.bin" value="vendor/bin/phpunit"/>
+    <property name="test.phpunit.config" value="phpunit.xml"/>
+    <property name="report.coverage.target" value="${targetPath}/reports/coverage"/>
+
+Include [phpunit](https://github.com/sebastianbergmann/phpunit) in composer.json
+    
+```json
+    "require-dev": {
+        "phpunit/phpunit": "4.2.*"
+    },
+```
+
+**PHPloc report configuration**
+
+    <property name="report.phploc" value="true" />
+    
+Default configuration
+    
+    <property name="phploc.bin" value="vendor/bin/phploc"/>
+    <property name="report.phploc.report" value="${targetPath}/reports/phploc.csv"/>
+    <property name="report.phploc.excludes" value="vendor,${targetPath},tools"/>
+
+Include [phploc](https://github.com/sebastianbergmann/phploc) in composer.json
+    
+```json
+    "require-dev": {
+        "phploc/phploc": "2.0.*"
+    },
+```
+
+**PHPCS report configuration**
+
+    <property name="report.phpcs" value="true" />
+    
+Default configuration
+    
+    <property name="phpcs.bin" value="vendor/bin/phpcs"/>
+    <property name="phpcs.standard" value="PSR2"/>
+    <property name="report.phpcs.report" value="${targetPath}/reports/phpcs-checkstyle.xml"/>
+    <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,tools/*,Tests/*"/>
+
+Include [phploc](https://github.com/sebastianbergmann/phploc) in composer.json
+    
+```json
+    "require-dev": {
+        "squizlabs/php_codesniffer": "2.1.*"
+    },
+```
+
+### build target
+
+*TODO*
+
+### release target
+
+*TODO*
+
+### release-next-version target
 
 *TODO*
 
 ## Parent Building
 
-This project is usefull for building more than one project from the same GIT repository.
+This project is useful for building more than one project from the same GIT repository.
 
 **Project Structure**
 

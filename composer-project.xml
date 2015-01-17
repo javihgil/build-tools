@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="composer-project" default="info">
+
+    <target name="clear" depends="init" description="Cleans project">
+        <call target="-pre-clear" required="false" />
+        <rm dir="vendor" />
+        <rm dir="${targetPath}/reports"/>
+        <rm pattern="${targetPath}/build*" />
+        <rm pattern="${targetPath}/release*" />
+        <call target="-post-clear" required="false" />
+    </target>
+
+    <target name="reset" depends="clear" description="Resets project">
+        <call target="-pre-reset" required="false" />
+        <rm dir="${targetPath}" />
+        <rm file="composer.phar" />
+        <rm file="composer.lock" />
+        <call target="-post-reset" required="false" />
+    </target>
+
+    <target name="prepare" hidden="true" depends="clear" description="Prepares project">
+        <call target="-pre-prepare" required="false" />
+        <mkdir dir="${targetPath}" />
+        <mkdir dir="${targetPath}/composer" />
+        <composr action="get" />
+        <call target="-post-prepare" required="false" />
+    </target>
+
+    <target name="install" depends="prepare" description="Installs project">
+        <call target="-pre-install" required="false" />
+        <repo action="download-deps" if="private.repository" driver="${private.repository.driver}" />
+        <repo action="check-update" if="private.repository" driver="${private.repository.driver}" />
+        <composr action="check-lock-updated" />
+        <composr action="install" dev="true" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
+        <call target="-post-install" required="false" />
+    </target>
+
+    <target name="test" depends="install" description="Tests project">
+        <call target="-pre-test" required="false"/>
+        <test method="phpunit" if="test.phpunit" bin="${phpunit.bin}" config="${test.phpunit.config}" failbuild="${test.phpunit.failbuild}" />
+        <test method="phplint" if="test.phplint" bin="${phplint.bin}" failbuild="${test.phplint.failbuild}">
+            <fileset refid="test.phpfiles" />
+        </test>
+        <test method="twiglint" if="test.twiglint" bin="${twiglint.bin}" failbuild="${test.twiglint.failbuild}">
+            <fileset refid="test.twigfiles" />
+        </test>
+        <call target="-post-test" required="false"/>
+    </target>
+
+    <target name="report" depends="install">
+        <call target="-pre-report" required="false"/>
+        <mkdir dir="${targetPath}/reports/" />
+        <test method="phpunit" if="report.coverage" bin="${phpunit.bin}" config="${test.phpunit.config}" coverageHtmlTarget="${report.coverage.target}" />
+        <test method="phploc" if="report.phploc" bin="${phploc.bin}" excludes="${report.phploc.excludes}" reportTarget="${report.phploc.report}"/>
+        <test method="phpcs" if="report.phpcs" bin="${phpcs.bin}" standard="${phpcs.standard}" excludes="vendor/*,${targetPath}/*,tools/*" reportTarget="${targetPath}/reports/phpcs-checkstyle.xml"/>
+        <call target="-post-report" required="false"/>
+    </target>
+
+    <target name="build" depends="info,test">
+        <call target="-build-prepare" required="true"/>
+        <call target="-build-copy" required="true"/>
+        <call target="-build-install"/>
+        <call target="-build-package" required="true"/>
+        <call target="-build-store" required="true"/>
+    </target>
+
+    <target name="-build-prepare" hidden="true">
+        <composr action="check-dev-version"/>
+        <mkdir dir="${targetPath}/build" />
+    </target>
+
+    <target name="-build-copy" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*"/>
+        </then></if>
+    </target>
+
+    <target name="-build-install" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <echo message="Bundles has nothing to install for build" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <echo message="Libraries has nothing to install for build" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <mkdir dir="${targetPath}/build/${targetPath}/composer"/>
+            <ccopy from="${targetPath}/composer" to="${targetPath}/build/${targetPath}/composer"/>
+            <repo action="download-deps" if="private.repository" driver="${private.repository.driver}" />
+            <repo action="check-update" if="private.repository" driver="${private.repository.driver}" />
+            <composr action="check-lock-updated" />
+            <composr action="install" dev="true" optimizeautoloader="true" dir="${targetPath}/build" />
+            <rm dir="${targetPath}/build/target" />
+            <rm dir="${targetPath}/web/bundles" />
+            <symfony action="cache-clear" dir="${targetPath}/build" env="prod" />
+            <symfony action="assets-install" dir="${targetPath}/build" env="prod" symlink="false" path="web" />
+            <symfony action="assetic-dump" dir="${targetPath}/build" env="prod" />
+        </then></if>
+    </target>
+
+    <target name="-build-package" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <package format="zip" dir="${targetPath}/build" file="build.zip" log="build.zip.log" sha1="true" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <package format="zip" dir="${targetPath}/build" file="build.zip" log="build.zip.log" sha1="true" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <package format="tgz" dir="${targetPath}/build" file="build.tar.gz" log="build.tar.gz.log" sha1="true" />
+        </then></if>
+    </target>
+
+    <target name="-build-store" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <repo action="upload-build" file="${targetPath}/build.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <repo action="upload-build" file="${targetPath}/build.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <repo action="upload-build" file="${targetPath}/build.tar.gz" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+            <rm file="${targetPath}/build/composer.lock"/>
+            <rm dir="${targetPath}/build/target"/>
+            <!-- clear files -->
+        </then></if>
+    </target>
+
+    <target name="release" depends="build">
+        <if>
+            <and>
+                <istrue value="${module}" />
+                <not><isset property="moduleName" /></not>
+            </and>
+            <then>
+                <fail message="Modules only can released from parent" />
+            </then>
+        </if>
+
+        <call target="-release-prepare" required="true"/>
+        <call target="-release-tag" required="true"/>
+        <call target="-release-copy" required="true"/>
+        <call target="-release-install"/>
+        <call target="-release-package" required="true"/>
+        <call target="-release-store" required="true"/>
+        <call target="-release-prepare-next" required="true"/>
+    </target>
+
+    <target name="module-release" depends="prepare" hidden="true">
+        <call target="-release-prepare" required="true"/>
+        <call target="-release-copy" required="true"/>
+        <call target="-release-install"/>
+        <call target="-release-package" required="true"/>
+        <call target="-release-store" required="true"/>
+    </target>
+
+    <target name="-release-prepare" hidden="true">
+        <fail unless="release.version" message="Missing release.version parameter" />
+        <fail unless="release.next.version" message="Missing release.next.version parameter" />
+
+        <composr action="check-dev-version"/>
+        <mkdir dir="${targetPath}/release" />
+
+        <composr action="version-update" version="${release.version}" forceVersionType="release" />
+    </target>
+
+    <target name="-release-tag" hidden="true">
+        <!-- git tag + commit + push -->
+        <echo message="tag"/>
+    </target>
+
+    <target name="-release-copy" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+        </then></if>
+    </target>
+
+    <target name="-release-install" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <echo message="Bundles has nothing to install for release" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <echo message="Libraries has nothing to install for release" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+        </then></if>
+    </target>
+
+    <target name="-release-package" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <package format="zip" dir="${targetPath}/release" file="release.zip" log="release.zip.log" sha1="true" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <package format="zip" dir="${targetPath}/release" file="release.zip" log="release.zip.log" sha1="true" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <package format="tgz" dir="${targetPath}/release" file="release.tar.gz" log="release.tar.gz.log" sha1="true" />
+        </then></if>
+    </target>
+
+    <target name="-release-store" hidden="true">
+        <if><equals arg1="${composer.type}" arg2="bundle"/><then>
+            <repo action="upload-release" file="${targetPath}/release.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="library"/><then>
+            <repo action="upload-release" file="${targetPath}/release.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+        </then></if>
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <repo action="upload-release" file="${targetPath}/release.tar.gz" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+            <rm file="${targetPath}/release/composer.lock"/>
+            <rm dir="${targetPath}/release/target"/>
+            <!-- TODO clear files -->
+        </then></if>
+    </target>
+
+    <target name="-release-prepare-next" hidden="true">
+        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
+        <!-- TODO prepare next version + commit + push -->
+    </target>
+
+    <target name="release-next-version" hidden="true">
+        <if>
+            <and>
+                <istrue value="${module}" />
+                <not><isset property="moduleName" /></not>
+            </and>
+            <then>
+                <fail message="Modules only can released from parent" />
+            </then>
+        </if>
+        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
+    </target>
+
+    <import file="tools/phing/_common_targets.xml"/>
+    <import file="tools/phing/_configuration.xml"/>
+    <import file="tools/phing/_includes.xml"/>
+</project>

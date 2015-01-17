@@ -10,6 +10,9 @@
 
     <property name="module" value="false"/>
 
+    <property name="private.repository" value="false"/>
+    <property name="private.repository.driver" value=""/>
+
     <property name="phpunit.bin"    value="vendor/bin/phpunit"/>
     <property name="phplint.bin"    value="php"/>
     <property name="twiglint.bin"   value="vendor/bin/twig-lint"/>
@@ -40,9 +43,11 @@
     </fileset>
 
     <property name="report.coverage" value="false" />
+    <property name="report.coverage.target" value="${targetPath}/reports/coverage"/>
 
     <property name="report.phploc" value="false" />
-    <property name="report.coverage.target" value="${targetPath}/reports/coverage"/>
+    <property name="report.phploc.report" value="${targetPath}/reports/phploc.csv"/>
+    <property name="report.phploc.excludes" value="vendor,${targetPath},tools"/>
 
     <property name="report.phpcs" value="false" />
     <property name="report.phpcs.report" value="${targetPath}/reports/phpcs-checkstyle.xml"/>
