@@ -69,6 +69,10 @@ This target has dependency on *init* target.
     </target>
 ```
 
+**Executing**
+
+    $ phing info
+
 **Extending**
 
 Execute actions before default info actions.
