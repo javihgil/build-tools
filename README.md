@@ -28,6 +28,11 @@ extending phing default features.
     <taskdef name="test"    classname="lib.Phing.tasks.TestTask" />
 ```
 
+**Usage of common includes**
+
+```xml
+    <import file="tools/phing/_includes.xml"/>
+```
 
 ## Common Configuration
 
@@ -75,7 +80,19 @@ extending phing default features.
     <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,tools/*,Tests/*"/>
 ```
 
+**Usage of common configuration**
+
+```xml
+    <import file="tools/phing/_configuration.xml"/>
+```
+
 ## Common Targets
+
+**Usage of common targets**
+
+```xml
+    <import file="tools/phing/_common_targets.xml"/>
+```
 
 ### init
 
