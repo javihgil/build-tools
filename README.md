@@ -160,6 +160,10 @@ It's possible to download previous some packages from private repository.
 
     <property name="private.repository" value="true" />
     <property name="private.repository.driver" value="s3" /> <!-- available drivers: s3 -->
+    <property name="private.dependencies.regex" value="^javihgil\/"/>
+    <property name="s3.build.bucket.path" value="mybucket/builds"/>
+    <property name="s3.release.bucket.path" value="mybucket/releases"/>
+    <property name="s3.cmd.bin" value="/usr/bin/s3cmd"/>
 
 ### test target
 
