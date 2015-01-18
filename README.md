@@ -1,5 +1,8 @@
 # build-tools
 
+These tools are thought for implement an automated build and release process for PHP projects 
+in Linux systems using phing.
+
 ## Usage
 
 Execute in git repository root:
