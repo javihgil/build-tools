@@ -139,7 +139,7 @@
         </then></if>
     </target>
 
-    <target name="release" depends="build">
+    <target name="-release-check">
         <if>
             <and>
                 <istrue value="${module}" />
@@ -150,6 +150,10 @@
             </then>
         </if>
 
+        <call target="release.-release-check" required="true" />
+    </target>
+
+    <target name="release" depends="-release-check, build">
         <call target="-release-prepare" required="true"/>
         <call target="-release-tag" required="true"/>
         <call target="-release-copy" required="true"/>
@@ -168,9 +172,6 @@
     </target>
 
     <target name="-release-prepare" hidden="true">
-        <fail unless="release.version" message="Missing release.version parameter" />
-        <fail unless="release.next.version" message="Missing release.next.version parameter" />
-
         <composr action="check-dev-version"/>
         <mkdir dir="${targetPath}/release" />
 
@@ -258,6 +259,7 @@
         <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
     </target>
 
+    <import file="${toolsPath}/phing/release.xml"/>
     <import file="${toolsPath}/phing/common_targets.xml"/>
     <import file="${toolsPath}/phing/configuration.xml"/>
     <import file="${toolsPath}/phing/includes.xml"/>

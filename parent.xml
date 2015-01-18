@@ -27,10 +27,7 @@
         <modulei action="summary" />
     </target>
 
-    <target name="release" depends="build">
-        <fail unless="release.version" message="Missing release.version parameter" />
-        <fail unless="release.next.version" message="Missing release.next.version parameter" />
-
+    <target name="release" depends="-release-check, build">
         <modulei action="phing" modulesrefid="modules" task="module-release">
             <arg value="-Drelease.version=${release.version}"/>
             <arg value="-Drelease.next.version=${release.next.version}"/>
@@ -55,8 +52,9 @@
         <exec command="git push --all origin" checkreturn="true" passthru="true" />
     </target>
 
-    <import file="tools/phing/common_targets.xml"/>
-    <import file="tools/phing/configuration.xml"/>
-    <import file="tools/phing/includes.xml"/>
+    <import file="${toolsPath}/phing/release.xml"/>
+    <import file="${toolsPath}/phing/common_targets.xml"/>
+    <import file="${toolsPath}/phing/configuration.xml"/>
+    <import file="${toolsPath}/phing/includes.xml"/>
 
 </project>

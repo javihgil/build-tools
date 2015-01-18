@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="release" default="-empty">
+
+    <target name="-empty" hidden="true">
+        <echo message="Empty target for document validation"/>
+    </target>
+
+    <target name="-release-check">
+        <fail unless="release.version" message="Missing release.version parameter" />
+        <fail unless="release.next.version" message="Missing release.next.version parameter" />
+    </target>
+
+</project>
