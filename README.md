@@ -12,7 +12,7 @@ extending phing default features.
 **Usage of common includes**
 
 ```xml
-    <import file="tools/phing/_includes.xml"/>
+    <import file="tools/phing/includes.xml"/>
 ```
 
 ## Common Configuration
@@ -22,7 +22,7 @@ Defines common configuration for some targets.
 **Usage of common configuration**
 
 ```xml
-    <import file="tools/phing/_configuration.xml"/>
+    <import file="tools/phing/configuration.xml"/>
 ```
 
 ## Common Targets
@@ -30,7 +30,7 @@ Defines common configuration for some targets.
 **Usage of common targets**
 
 ```xml
-    <import file="tools/phing/_common_targets.xml"/>
+    <import file="tools/phing/common_targets.xml"/>
 ```
 
 ### init
@@ -391,7 +391,7 @@ Also is possible to override init target and use the default target without exec
 ```xml
     <target name="info" depends="init">
         <!-- custom actions before default ones -->
-        <call target="_common_targets.info" required="true" /> 
+        <call target="common_targets.info" required="true" /> 
         <!-- custom actions after default ones -->
     </target>
 ```

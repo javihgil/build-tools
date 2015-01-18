@@ -55,8 +55,8 @@
         <exec command="git push --all origin" checkreturn="true" passthru="true" />
     </target>
 
-    <import file="tools/phing/_common_targets.xml"/>
-    <import file="tools/phing/_configuration.xml"/>
-    <import file="tools/phing/_includes.xml"/>
+    <import file="tools/phing/common_targets.xml"/>
+    <import file="tools/phing/configuration.xml"/>
+    <import file="tools/phing/includes.xml"/>
 
 </project>

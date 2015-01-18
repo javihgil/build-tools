@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="_common_targets" default="-empty">
+<project name="common_targets" default="-empty">
 
     <target name="-empty" hidden="true">
         <echo message="Empty target for document validation"/>

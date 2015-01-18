@@ -257,7 +257,7 @@
         <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
     </target>
 
-    <import file="tools/phing/_common_targets.xml"/>
-    <import file="tools/phing/_configuration.xml"/>
-    <import file="tools/phing/_includes.xml"/>
+    <import file="tools/phing/common_targets.xml"/>
+    <import file="tools/phing/configuration.xml"/>
+    <import file="tools/phing/includes.xml"/>
 </project>
