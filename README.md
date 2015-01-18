@@ -337,8 +337,8 @@ Parent *build.xml* file must include the *tools/parent.xml* file, and define it'
             <module name="module2"/>
         </modules>
         
-        <includepath classpath="tools" />
-        <import file="tools/parent.xml"/>
+        <property name="toolsPath" value="tools"/>
+        <import file="${toolsPath}/parent.xml"/>
     </project>
 ```
 

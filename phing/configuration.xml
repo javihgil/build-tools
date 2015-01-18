@@ -30,11 +30,11 @@
     <property name="test.phpunit.config" value="phpunit.xml"/>
     <property name="test.phpunit.failbuild" value="true"/>
 
-    <fileset id="test.phpfiles" dir="/">
+    <fileset id="test.phpfiles" dir=".">
         <exclude name="app/cache/**"/>
         <exclude name="vendor/**"/>
         <exclude name="${targetPath}/**"/>
-        <exclude name="tools*/**"/>
+        <exclude name="${toolsPath}*/**"/>
         <include name="**/*.php"/>
     </fileset>
 
@@ -44,7 +44,7 @@
     <property name="test.twiglint" value="false" />
     <property name="test.twiglint.failbuild" value="true"/>
 
-    <fileset id="test.twigfiles" dir="/">
+    <fileset id="test.twigfiles" dir=".">
         <include name="Resources/**/*.twig" />
     </fileset>
 
@@ -53,17 +53,17 @@
 
     <property name="report.phploc" value="false" />
     <property name="report.phploc.report" value="${targetPath}/reports/phploc.csv"/>
-    <property name="report.phploc.excludes" value="vendor,${targetPath},tools"/>
+    <property name="report.phploc.excludes" value="vendor,${targetPath},${toolsPath}"/>
 
     <property name="report.phpcs" value="false" />
     <property name="report.phpcs.report" value="${targetPath}/reports/phpcs-checkstyle.xml"/>
-    <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,tools/*,Tests/*"/>
+    <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,${toolsPath}/*,Tests/*"/>
 
-    <property name="build.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="build.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="build.project.excludes" value="build.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+    <property name="build.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.project.excludes" value="build.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
 
-    <property name="release.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="release.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="release.project.excludes" value="build.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+    <property name="release.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.project.excludes" value="build.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
 </project>

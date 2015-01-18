@@ -6,7 +6,7 @@
         <echo message="Empty target for document validation"/>
     </target>
 
-    <includepath classpath="tools" />
+    <includepath classpath="${toolsPath}" />
 
     <typedef name="modules" classname="lib.Phing.types.Modules" />
     <typedef name="module"  classname="lib.Phing.types.Module" />

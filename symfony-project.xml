@@ -34,5 +34,5 @@
               failbuild="${test.phpunit.failbuild}"/>
     </target>
 
-    <import file="tools/composer-project.xml"/>
+    <import file="${toolsPath}/composer-project.xml"/>
 </project>
