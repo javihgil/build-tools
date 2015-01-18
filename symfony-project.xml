@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="symfony-project" default="info">
+
+    <target name="dev-doctrine-reset">
+        <exec command="app/console doctrine:database:drop - -force" passthru="true"/>
+        <exec command="app/console doctrine:database:create" passthru="true"/>
+        <exec command="app/console doctrine:schema:update - -force" passthru="true"/>
+    </target>
+
+    <target name="dev-doctrine-update">
+        <symfony action="doctrine-schema-update"/>
+    </target>
+
+    <target name="dev-install">
+        <call target="install" required="true"/>
+        <call target="dev-clear" required="true"/>
+    </target>
+
+    <target name="dev-clear">
+        <symfony action="remove-cache"/>
+        <symfony action="remove-logs"/>
+        <symfony action="cache-clear" env="dev"/>
+        <symfony action="assets-install" env="dev" symlink="true" path="web"/>
+    </target>
+
+    <target name="dev-phpunit" depends="dev-install">
+        <test method="phpunit" if="test.phpunit" bin="${phpunit.bin}" config="${test.phpunit.config}"
+              failbuild="${test.phpunit.failbuild}"/>
+    </target>
+
+    <target name="dev-phpunit-only">
+        <test method="phpunit" if="test.phpunit" bin="${phpunit.bin}" config="${test.phpunit.config}"
+              failbuild="${test.phpunit.failbuild}"/>
+    </target>
+
     <import file="tools/composer-project.xml"/>
 </project>
