@@ -1,5 +1,12 @@
 # build-tools
 
+## Usage
+
+Execute in git repository root:
+
+    $ git submodule add https://github.com/javihgil/build-tools.git tools
+    $ git submodule update --init --recursive
+
 ## Build Process
 
 PREPARE > INSTALL > TEST > BUILD > RELEASE
