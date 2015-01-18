@@ -31,10 +31,11 @@
     <property name="test.phpunit.failbuild" value="true"/>
 
     <fileset id="test.phpfiles" dir="/">
-        <include name="**/*.php"/>
+        <exclude name="app/cache/**"/>
         <exclude name="vendor/**"/>
         <exclude name="${targetPath}/**"/>
-        <exclude name="tools/**"/>
+        <exclude name="tools*/**"/>
+        <include name="**/*.php"/>
     </fileset>
 
     <property name="test.phplint" value="false" />
@@ -57,4 +58,12 @@
     <property name="report.phpcs" value="false" />
     <property name="report.phpcs.report" value="${targetPath}/reports/phpcs-checkstyle.xml"/>
     <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,tools/*,Tests/*"/>
+
+    <property name="build.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.project.excludes" value="build.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+
+    <property name="release.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.project.excludes" value="build.xml,${targetPath}/,vendor/,tools*/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
 </project>

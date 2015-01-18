@@ -72,15 +72,15 @@
 
     <target name="-build-copy" hidden="true">
         <if><equals arg1="${composer.type}" arg2="bundle"/><then>
-            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="${build.bundle.excludes}"/>
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="library"/><then>
-            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="${build.library.excludes}"/>
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
-            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="build.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*"/>
+            <ccopy from="." to="${targetPath}/build" stats="true" logFile="${targetPath}/build.copy.log" excludes="${build.project.excludes}"/>
         </then></if>
     </target>
 
@@ -184,14 +184,15 @@
 
     <target name="-release-copy" hidden="true">
         <if><equals arg1="${composer.type}" arg2="bundle"/><then>
-            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="${release.bundle.excludes}"/>
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="library"/><then>
-            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="build.xml,phpunit.xml,${targetPath}/,vendor/,tools/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock"/>
+            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="${release.library.excludes}"/>
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <ccopy from="." to="${targetPath}/release" stats="true" logFile="${targetPath}/release.copy.log" excludes="${release.project.excludes}"/>
         </then></if>
     </target>
 
