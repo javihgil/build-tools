@@ -33,8 +33,8 @@
 
     <target name="install" depends="prepare" description="Installs project">
         <call target="-pre-install" required="false" />
-        <repo action="download-deps" if="private.repository" driver="${private.repository.driver}" packageRegex="${private.dependencies.regex}" />
-        <repo action="check-update" if="private.repository" driver="${private.repository.driver}" />
+        <repo action="download-deps" if="private.dependencies.regex" driver="${private.repository.driver}" packageRegex="${private.dependencies.regex}" />
+        <repo action="check-update" if="private.dependencies.regex" driver="${private.repository.driver}" />
         <composr action="check-lock-updated" />
         <composr action="install" dev="true" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
         <call target="-post-install" required="false" />
@@ -100,8 +100,8 @@
         <if><equals arg1="${composer.type}" arg2="project"/><then>
             <mkdir dir="${targetPath}/build/${targetPath}/composer"/>
             <ccopy from="${targetPath}/composer" to="${targetPath}/build/${targetPath}/composer"/>
-            <repo action="download-deps" if="private.repository" driver="${private.repository.driver}" packageRegex="${private.dependencies.regex}" />
-            <repo action="check-update" if="private.repository" driver="${private.repository.driver}" />
+            <repo action="download-deps" if="private.dependencies.regex" driver="${private.repository.driver}" packageRegex="${private.dependencies.regex}" />
+            <repo action="check-update" if="private.dependencies.regex" driver="${private.repository.driver}" />
             <composr action="check-lock-updated" />
             <composr action="install" dev="true" optimizeautoloader="true" dir="${targetPath}/build" />
             <composr action="log-installed" logFile="${targetPath}/build/packages.version" dir="${targetPath}/build" />
