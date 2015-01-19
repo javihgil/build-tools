@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="composer-project" default="info">
+<project name="composer_project" default="info">
 
     <target name="clear" depends="init" description="Cleans project">
         <call target="-pre-clear" required="false" />
@@ -22,7 +22,11 @@
     <target name="prepare" hidden="true" depends="clear" description="Prepares project">
         <call target="-pre-prepare" required="false" />
         <mkdir dir="${targetPath}" />
-        <mkdir dir="${targetPath}/composer" />
+
+        <if><not><equals arg1="${private.dependencies.regex}" arg2=""/></not><then>
+            <mkdir dir="${targetPath}/composer" />
+        </then></if>
+
         <composr action="get" />
         <call target="-post-prepare" required="false" />
     </target>
