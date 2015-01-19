@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="symfony-project" default="info">
+<project name="symfony_project" default="info">
 
     <target name="dev-doctrine-reset">
         <exec command="app/console doctrine:database:drop - -force" passthru="true"/>
