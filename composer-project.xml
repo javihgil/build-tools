@@ -103,7 +103,7 @@
             <repo action="download-deps" if="private.dependencies.regex" driver="${private.repository.driver}" packageRegex="${private.dependencies.regex}" />
             <repo action="check-update" if="private.dependencies.regex" driver="${private.repository.driver}" />
             <composr action="check-lock-updated" />
-            <composr action="install" dev="true" optimizeautoloader="true" dir="${targetPath}/build" />
+            <composr action="install" dev="false" optimizeautoloader="true" dir="${targetPath}/build" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
             <composr action="log-installed" logFile="${targetPath}/build/packages.version" dir="${targetPath}/build" />
             <rm dir="${targetPath}/build/target" />
             <rm dir="${targetPath}/web/bundles" />
