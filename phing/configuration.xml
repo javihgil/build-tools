@@ -66,4 +66,26 @@
     <property name="release.bundle.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
     <property name="release.library.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
     <property name="release.project.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+
+    <target name="config" description="Shows configuration">
+        <echo message="targetPath: ${targetPath}" />
+
+        <echo message="module: ${module}" />
+
+        <echo message="private.repository: ${private.repository}" />
+        <echo message="private.repository.driver: ${private.repository.driver}" />
+        <echo message="private.dependencies.regex: ${private.dependencies.regex}" />
+
+        <echo message="s3.build.bucket.path: ${s3.build.bucket.path}" />
+        <echo message="s3.release.bucket.path : ${s3.release.bucket.path}" />
+        <echo message="s3.cmd.bin: ${s3.cmd.bin}" />
+
+        <echo message="build.bundle.excludes: ${build.bundle.excludes}" />
+        <echo message="build.library.excludes: ${build.library.excludes}" />
+        <echo message="build.project.excludes: ${build.project.excludes}" />
+
+        <echo message="release.bundle.excludes: ${release.bundle.excludes}" />
+        <echo message="release.library.excludes: ${release.library.excludes}" />
+        <echo message="release.project.excludes: ${release.project.excludes}" />
+    </target>
 </project>
