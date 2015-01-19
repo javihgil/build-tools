@@ -59,11 +59,11 @@
     <property name="report.phpcs.report" value="${targetPath}/reports/phpcs-checkstyle.xml"/>
     <property name="report.phpcs.excludes" value="vendor/*,${targetPath}/*,${toolsPath}/*,Tests/*"/>
 
-    <property name="build.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="build.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="build.project.excludes" value="build.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+    <property name="build.bundle.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.library.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="build.project.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
 
-    <property name="release.bundle.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="release.library.excludes" value="build.xml,phpunit.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
-    <property name="release.project.excludes" value="build.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
+    <property name="release.bundle.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.library.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
+    <property name="release.project.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*" />
 </project>
