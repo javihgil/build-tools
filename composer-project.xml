@@ -104,6 +104,7 @@
             <repo action="check-update" if="private.repository" driver="${private.repository.driver}" />
             <composr action="check-lock-updated" />
             <composr action="install" dev="true" optimizeautoloader="true" dir="${targetPath}/build" />
+            <composr action="log-installed" logFile="${targetPath}/build/packages.version" dir="${targetPath}/build" />
             <rm dir="${targetPath}/build/target" />
             <rm dir="${targetPath}/web/bundles" />
             <symfony action="cache-clear" dir="${targetPath}/build" env="prod" />
