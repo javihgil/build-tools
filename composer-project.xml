@@ -258,6 +258,19 @@
         <exec command="git push --all origin" checkreturn="true" passthru="true" />
     </target>
 
+    <target name="release-next-version" hidden="true">
+        <if>
+            <and>
+                <istrue value="${module}" />
+                <not><isset property="moduleName" /></not>
+            </and>
+            <then>
+                <fail message="Modules only can released from parent" />
+            </then>
+        </if>
+        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
+    </target>
+
     <import file="${toolsPath}/phing/release.xml"/>
     <import file="${toolsPath}/phing/common_targets.xml"/>
     <import file="${toolsPath}/phing/configuration.xml"/>
