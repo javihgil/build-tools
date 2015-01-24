@@ -50,6 +50,7 @@
 
     <property name="report.coverage" value="false" />
     <property name="report.coverage.target" value="${targetPath}/reports/coverage"/>
+    <property name="report.coverage.clover.target" value="${targetPath}/reports/coverage.xml"/>
 
     <property name="report.phploc" value="false" />
     <property name="report.phploc.report" value="${targetPath}/reports/phploc.csv"/>
