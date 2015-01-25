@@ -32,6 +32,22 @@
         </if>
 
         <if>
+            <isset property="RELEASE_VERSION" />
+            <then>
+                <echo message="Release version got from Jenkins Release plugin RELEASE_VERSION: ${RELEASE_VERSION}"/>
+                <property name="release.version" value="${RELEASE_VERSION}" />
+            </then>
+        </if>
+
+        <if>
+            <isset property="DEVELOPMENT_VERSION" />
+            <then>
+                <echo message="Release next development version got from Jenkins Release plugin DEVELOPMENT_VERSION: ${DEVELOPMENT_VERSION}"/>
+                <property name="release.next.version" value="${DEVELOPMENT_VERSION}" />
+            </then>
+        </if>
+
+        <if>
             <not><isset property="release.version" /></not>
             <then>
                 <composr action="get-version" property="release.version" forceVersionType="release" />
