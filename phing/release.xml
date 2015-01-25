@@ -6,9 +6,71 @@
         <echo message="Empty target for document validation"/>
     </target>
 
-    <target name="-release-check">
-        <fail unless="release.version" message="Missing release.version parameter" />
-        <fail unless="release.next.version" message="Missing release.next.version parameter" />
+    <target name="-release-check" hidden="true" depends="init">
+        <if>
+            <and>
+                <istrue value="${module}" />
+                <not><isset property="moduleName" /></not>
+            </and>
+            <then>
+                <fail message="Modules only can released from parent" />
+            </then>
+        </if>
+
+        <if>
+            <equals arg1="${release.version}" arg2="" trim="true"/>
+            <then>
+                <fail message="release.version parameter is empty" />
+            </then>
+        </if>
+
+        <if>
+            <equals arg1="${release.next.version}" arg2="" trim="true"/>
+            <then>
+                <fail message="release.version parameter is empty" />
+            </then>
+        </if>
+
+        <if>
+            <not><isset property="release.version" /></not>
+            <then>
+                <composr action="get-version" property="release.version" forceVersionType="release" />
+                <echo message="release.version parameter is not present. Release version got from composer.json: ${release.version}" level="warning" />
+            </then>
+        </if>
+
+        <if>
+            <not><isset property="release.next.version" /></not>
+            <then>
+                <composr action="get-version" property="release.next.version" increment="true" />
+                <echo message="release.next.version parameter is not present. Next build version got from composer.json: ${release.next.version}" level="warning" />
+            </then>
+        </if>
+
+        <exec command="git tag | grep ${phing.project.name}-${release.version} | wc -l" outputProperty="tag.exists" />
+
+        <if>
+            <equals arg1="${tag.exists}" arg2="1"/>
+            <then>
+                <fail message="${release.version} version already exists as tag in the git repository" />
+            </then>
+        </if>
+    </target>
+
+    <target name="-release-tag" hidden="true">
+        <composr action="version-update" version="${release.version}" forceVersionType="release" />
+        <exec command="git add ." checkreturn="true" passthru="true" />
+        <exec command="git commit -m 'Phing release ${release.version}'" checkreturn="true" passthru="true" />
+        <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+        <exec command="git push --tags origin ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+    </target>
+
+    <target name="-release-prepare-next" hidden="true">
+        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
+        <exec command="git add ." checkreturn="true" passthru="true" />
+        <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
+        <exec command="git push --all origin" checkreturn="true" passthru="true" />
     </target>
 
 </project>

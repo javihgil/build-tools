@@ -145,20 +145,6 @@
         </then></if>
     </target>
 
-    <target name="-release-check">
-        <if>
-            <and>
-                <istrue value="${module}" />
-                <not><isset property="moduleName" /></not>
-            </and>
-            <then>
-                <fail message="Modules only can released from parent" />
-            </then>
-        </if>
-
-        <call target="release.-release-check" required="true" />
-    </target>
-
     <target name="release" depends="-release-check, build">
         <call target="-release-prepare" required="true"/>
         <call target="-release-tag" required="true"/>
@@ -182,15 +168,6 @@
         <mkdir dir="${targetPath}/release" />
 
         <composr action="version-update" version="${release.version}" forceVersionType="release" />
-    </target>
-
-    <target name="-release-tag" hidden="true">
-        <composr action="version-update" version="${release.version}" forceVersionType="release" />
-        <exec command="git add ." checkreturn="true" passthru="true" />
-        <exec command="git commit -m 'Phing release ${release.version}'" checkreturn="true" passthru="true" />
-        <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
-        <exec command="git push --tags origin ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
     </target>
 
     <target name="-release-copy" hidden="true">
@@ -249,13 +226,6 @@
             <rm dir="${targetPath}/release/target"/>
             <!-- TODO clear files -->
         </then></if>
-    </target>
-
-    <target name="-release-prepare-next" hidden="true">
-        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
-        <exec command="git add ." checkreturn="true" passthru="true" />
-        <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
     </target>
 
     <target name="release-next-version" hidden="true">

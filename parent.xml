@@ -35,21 +35,13 @@
         <modulei action="summary" />
         <modulei action="failatend" />
 
-        <composr action="version-update" version="${release.version}" forceVersionType="release" />
-        <exec command="git add ." checkreturn="true" passthru="true" />
-        <exec command="git commit -m 'Phing release ${release.version}'" checkreturn="true" passthru="true" />
-        <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
-        <exec command="git push --tags origin ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+        <call target="-release-tag" required="true"/>
 
         <modulei action="phing" modulesrefid="modules" task="release-next-version">
             <arg value="-Drelease.next.version=${release.next.version}"/>
         </modulei>
-        <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
 
-        <exec command="git add ." checkreturn="true" passthru="true" />
-        <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+        <call target="-release-prepare-next" required="true"/>
     </target>
 
     <import file="${toolsPath}/phing/release.xml"/>
