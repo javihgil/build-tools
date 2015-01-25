@@ -63,6 +63,9 @@
             </then>
         </if>
 
+        <echo message="git checkout ${release.branch}" />
+        <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
+
         <echo message="git pull --rebase origin" />
         <exec command="git pull --rebase origin" checkreturn="true" passthru="true" />
 
