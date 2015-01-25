@@ -74,19 +74,21 @@
     </target>
 
     <target name="-release-tag" hidden="true">
+        <exec command="git checkout ${release.branch}" />
         <composr action="version-update" version="${release.version}" forceVersionType="release" />
         <exec command="git add ." checkreturn="true" passthru="true" />
         <exec command="git commit -m 'Phing release ${release.version}'" checkreturn="true" passthru="true" />
         <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+        <exec command="git push origin ${release.branch}" checkreturn="true" passthru="true" />
         <exec command="git push --tags origin ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
     </target>
 
     <target name="-release-prepare-next" hidden="true">
+        <exec command="git checkout ${release.branch}" />
         <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
         <exec command="git add ." checkreturn="true" passthru="true" />
         <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
-        <exec command="git push --all origin" checkreturn="true" passthru="true" />
+        <exec command="git push origin ${release.branch}" checkreturn="true" passthru="true" />
     </target>
 
 </project>

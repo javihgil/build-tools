@@ -67,6 +67,7 @@
     <property name="release.bundle.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
     <property name="release.library.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/composer.phar,**/composer.lock" />
     <property name="release.project.excludes" value="build.xml,phpunit*.xml,${targetPath}/,vendor/,${toolsPath}/,**/.git/,**/.gitignore,**/.gitmodules,**/.idea/,**/Tests/,**/tests/,**/composer.phar,app/cache/*,app/logs/*,web/app_dev.php,web/bundles" />
+    <property name="release.branch" value="master" />
 
     <target name="config" description="Shows configuration">
         <echo message="targetPath: ${targetPath}" />
