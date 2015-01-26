@@ -84,6 +84,9 @@
         <echo message="git checkout ${release.branch}" />
         <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
 
+        <echo message="git pull --rebase origin ${release.branch}" />
+        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
+
         <composr action="version-update" version="${release.version}" forceVersionType="release" />
 
         <echo message="git add ." />
@@ -105,6 +108,9 @@
     <target name="-release-prepare-next" hidden="true">
         <echo message="git checkout ${release.branch}" />
         <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
+
+        <echo message="git pull --rebase origin ${release.branch}" />
+        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
 
         <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
 
