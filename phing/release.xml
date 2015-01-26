@@ -66,8 +66,8 @@
         <echo message="git checkout ${release.branch}" />
         <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
 
-        <echo message="git pull --rebase origin" />
-        <exec command="git pull --rebase origin" checkreturn="true" passthru="true" />
+        <echo message="git pull --rebase origin ${release.branch}" />
+        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
 
         <echo message="git tag | grep ${phing.project.name}-${release.version} | wc -l" />
         <exec command="git tag | grep ${phing.project.name}-${release.version} | wc -l" outputProperty="tag.exists"  checkreturn="true" passthru="true" />
