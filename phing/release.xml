@@ -84,9 +84,6 @@
         <echo message="git checkout ${release.branch}" />
         <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
 
-        <echo message="git pull --rebase origin ${release.branch}" />
-        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
-
         <composr action="version-update" version="${release.version}" forceVersionType="release" />
 
         <echo message="git add ." />
@@ -97,6 +94,9 @@
 
         <echo message="git tag ${phing.project.name}-${release.version}" />
         <exec command="git tag ${phing.project.name}-${release.version}" checkreturn="true" passthru="true" />
+
+        <echo message="git pull --rebase origin ${release.branch}" />
+        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
 
         <echo message="git push origin ${release.branch}"/>
         <exec command="git push origin ${release.branch}" checkreturn="true" passthru="true" />
@@ -109,9 +109,6 @@
         <echo message="git checkout ${release.branch}" />
         <exec command="git checkout ${release.branch}" checkreturn="true" passthru="true" />
 
-        <echo message="git pull --rebase origin ${release.branch}" />
-        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
-
         <composr action="version-update" version="${release.next.version}" forceVersionType="dev" />
 
         <echo message="git add ." />
@@ -119,6 +116,9 @@
 
         <echo message="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" />
         <exec command="git commit -m 'Phing prepare next development iteration: ${release.next.version}'" checkreturn="true" passthru="true" />
+
+        <echo message="git pull --rebase origin ${release.branch}" />
+        <exec command="git pull --rebase origin ${release.branch}" checkreturn="true" passthru="true" />
 
         <echo message="git push origin ${release.branch}" />
         <exec command="git push origin ${release.branch}" checkreturn="true" passthru="true" />
