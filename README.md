@@ -410,3 +410,13 @@ Also is possible to override init target and use the default target without exec
     </target>
 ```
 
+## Install latest s3cmd on Ubuntu
+ 
+[Source](https://gist.github.com/dominicsayers/5100711)
+
+    sudo apt-get install python-setuptools python-dateutil
+    wget http://downloads.sourceforge.net/project/s3tools/s3cmd/1.5.0/s3cmd-1.5.0.tar.gz
+    tar xvfz s3cmd-1.5.0.tar.gz
+    cd s3cmd-1.5.0
+    sudo python setup.py install
+    s3cmd --vesion
