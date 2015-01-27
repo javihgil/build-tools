@@ -106,11 +106,6 @@
             <composr action="install" dev="false" optimizeautoloader="true" dir="${targetPath}/build" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
             <composr action="log-installed" logFile="${targetPath}/build/packages.version" dir="${targetPath}/build" />
             <rm dir="${targetPath}/build/target" />
-            <rm dir="${targetPath}/web/bundles" />
-            <!-- Clear vendors -->
-            <symfony action="cache-clear" dir="${targetPath}/build" env="prod" />
-            <symfony action="assets-install" dir="${targetPath}/build" env="prod" symlink="false" path="web" />
-            <symfony action="assetic-dump" dir="${targetPath}/build" env="prod" />
         </then></if>
     </target>
 
