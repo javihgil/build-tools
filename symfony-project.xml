@@ -46,5 +46,17 @@
         </then></if>
     </target>
 
+    <target name="-release-install" hidden="true">
+        <call target="composer_project.-build-install" required="true" />
+
+        <if><equals arg1="${composer.type}" arg2="project"/><then>
+            <rm dir="${targetPath}/web/bundles" />
+            <!-- Clear vendors -->
+            <symfony action="cache-clear" dir="${targetPath}/build" env="prod" />
+            <symfony action="assets-install" dir="${targetPath}/build" env="prod" symlink="false" path="web" />
+            <symfony action="assetic-dump" dir="${targetPath}/build" env="prod" />
+        </then></if>
+    </target>
+
     <import file="${toolsPath}/composer-project.xml"/>
 </project>
