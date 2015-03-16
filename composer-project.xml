@@ -105,7 +105,9 @@
             <composr action="check-lock-updated" />
             <composr action="install" dev="false" optimizeautoloader="true" dir="${targetPath}/build" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
             <composr action="log-installed" logFile="${targetPath}/build/packages.version" dir="${targetPath}/build" />
-            <rm dir="${targetPath}/build/target" />
+            <!-- clear files -->
+            <rm file="${targetPath}/build/composer.lock"/>
+            <rm dir="${targetPath}/build/target"/>
         </then></if>
     </target>
 
@@ -134,9 +136,6 @@
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
             <repo action="upload-build" file="${targetPath}/build.tar.gz" sha1="true" if="private.repository" driver="${private.repository.driver}" />
-            <rm file="${targetPath}/build/composer.lock"/>
-            <rm dir="${targetPath}/build/target"/>
-            <!-- clear files -->
         </then></if>
     </target>
 
@@ -196,7 +195,9 @@
             <composr action="check-lock-updated" />
             <composr action="install" dev="false" optimizeautoloader="true" dir="${targetPath}/release" preferDist="true" noProgress="true" profile="true" verbosity="vv" />
             <composr action="log-installed" logFile="${targetPath}/release/packages.version" dir="${targetPath}/release" />
-            <rm dir="${targetPath}/release/target" />
+            <!-- clear files -->
+            <rm file="${targetPath}/release/composer.lock"/>
+            <rm dir="${targetPath}/release/target"/>
         </then></if>
     </target>
 
@@ -225,9 +226,6 @@
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
             <repo action="upload-release" file="${targetPath}/release.tar.gz" sha1="true" if="private.repository" driver="${private.repository.driver}" />
-            <rm file="${targetPath}/release/composer.lock"/>
-            <rm dir="${targetPath}/release/target"/>
-            <!-- TODO clear files -->
         </then></if>
     </target>
 

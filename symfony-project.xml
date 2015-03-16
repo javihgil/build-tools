@@ -43,6 +43,10 @@
             <symfony action="cache-clear" dir="${targetPath}/build" env="prod" />
             <symfony action="assets-install" dir="${targetPath}/build" env="prod" symlink="false" path="web" />
             <symfony action="assetic-dump" dir="${targetPath}/build" env="prod" />
+
+            <!-- clean build symfony files  -->
+            <exec command="rm -rf ${targetPath}/build/app/cache/*" />
+            <exec command="rm -rf ${targetPath}/build/app/logs/*" />
         </then></if>
     </target>
 
@@ -55,6 +59,10 @@
             <symfony action="cache-clear" dir="${targetPath}/release" env="prod" />
             <symfony action="assets-install" dir="${targetPath}/release" env="prod" symlink="false" path="web" />
             <symfony action="assetic-dump" dir="${targetPath}/release" env="prod" />
+
+            <!-- clean build symfony files  -->
+            <exec command="rm -rf ${targetPath}/release/app/cache/*" />
+            <exec command="rm -rf ${targetPath}/release/app/logs/*" />
         </then></if>
     </target>
 
