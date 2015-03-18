@@ -29,7 +29,7 @@
     <property name="test.phpunit" value="false" />
     <property name="test.phpunit.config" value="phpunit.xml"/>
     <property name="test.phpunit.failbuild" value="true"/>
-    <property name="test.junit.target" value="${targetPath}/reports/junit.xml"/>
+    <property name="test.phpunit.junit.target" value="${targetPath}/reports/junit.xml"/>
 
     <fileset id="test.phpfiles" dir=".">
         <exclude name="app/cache/**"/>

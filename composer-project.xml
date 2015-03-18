@@ -42,7 +42,7 @@
 
     <target name="test" depends="install" description="Tests project">
         <call target="-pre-test" required="false"/>
-        <test method="phpunit" if="test.phpunit" bin="${phpunit.bin}" config="${test.phpunit.config}" failbuild="${test.phpunit.failbuild}" jUnitTarget="${test.junit.target}" />
+        <test method="phpunit" if="test.phpunit" bin="${phpunit.bin}" config="${test.phpunit.config}" failbuild="${test.phpunit.failbuild}" jUnitTarget="${test.phpunit.junit.target}" />
         <test method="phplint" if="test.phplint" bin="${phplint.bin}" failbuild="${test.phplint.failbuild}">
             <fileset refid="test.phpfiles" />
         </test>
