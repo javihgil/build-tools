@@ -16,6 +16,12 @@
         <modulei action="failatend" />
     </target>
 
+    <target name="test" depends="prepare">
+        <modulei action="phing" modulesrefid="modules" task="test" />
+        <modulei action="summary" />
+        <modulei action="failatend" />
+    </target>
+
     <target name="build" depends="prepare">
         <modulei action="phing" modulesrefid="modules" task="build" />
         <modulei action="summary" />
