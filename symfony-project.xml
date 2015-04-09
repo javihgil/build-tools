@@ -3,9 +3,9 @@
 <project name="symfony_project" default="info">
 
     <target name="dev-doctrine-reset">
-        <exec command="php app/console doctrine:database:drop - -force" passthru="true"/>
+        <exec command="php app/console doctrine:database:drop --force" passthru="true"/>
         <exec command="php app/console doctrine:database:create" passthru="true"/>
-        <exec command="php app/console doctrine:schema:update - -force" passthru="true"/>
+        <exec command="php app/console doctrine:schema:update --force" passthru="true"/>
     </target>
 
     <target name="dev-doctrine-update">
