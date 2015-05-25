@@ -55,9 +55,9 @@
     <target name="report" depends="install">
         <call target="-pre-report" required="false"/>
         <mkdir dir="${targetPath}/reports/" />
-        <test method="phpunit" if="report.coverage" bin="${phpunit.bin}" config="${test.phpunit.config}" coverageHtmlTarget="${report.coverage.target}" coverageCloverTarget="${report.coverage.clover.target}" />
-        <test method="phploc" if="report.phploc" bin="${phploc.bin}" excludes="${report.phploc.excludes}" reportTarget="${report.phploc.report}"/>
-        <test method="phpcs" if="report.phpcs" bin="${phpcs.bin}" standard="${phpcs.standard}" excludes="${report.phpcs.excludes}" reportTarget="${targetPath}/reports/phpcs-checkstyle.xml"/>
+        <test method="phpunit" if="report.coverage" bin="${phpunit.bin}" config="${test.phpunit.config}" coverageHtmlTarget="${report.coverage.target}" coverageCloverTarget="${report.coverage.clover.target}" failbuild="false" />
+        <test method="phploc" if="report.phploc" bin="${phploc.bin}" excludes="${report.phploc.excludes}" reportTarget="${report.phploc.report}" failbuild="false" />
+        <test method="phpcs" if="report.phpcs" bin="${phpcs.bin}" standard="${phpcs.standard}" excludes="${report.phpcs.excludes}" reportTarget="${targetPath}/reports/phpcs-checkstyle.xml" failbuild="false" />
         <call target="-post-report" required="false"/>
     </target>
 
