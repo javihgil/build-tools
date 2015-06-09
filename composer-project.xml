@@ -127,15 +127,15 @@
 
     <target name="-build-store" hidden="true">
         <if><equals arg1="${composer.type}" arg2="bundle"/><then>
-            <repo action="upload-build" file="${targetPath}/build.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+            <repo action="upload-build" file="${targetPath}/build.zip" latest="${private.repository.upload.latest.build}" sha1="true" if="private.repository" driver="${private.repository.driver}" />
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="library"/><then>
-            <repo action="upload-build" file="${targetPath}/build.zip" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+            <repo action="upload-build" file="${targetPath}/build.zip" latest="${private.repository.upload.latest.build}" sha1="true" if="private.repository" driver="${private.repository.driver}" />
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
-            <repo action="upload-build" file="${targetPath}/build.tar.gz" sha1="true" if="private.repository" driver="${private.repository.driver}" />
+            <repo action="upload-build" file="${targetPath}/build.tar.gz" latest="${private.repository.upload.latest.build}" sha1="true" if="private.repository" driver="${private.repository.driver}" />
         </then></if>
     </target>
 
@@ -203,15 +203,15 @@
 
     <target name="-release-package" hidden="true">
         <if><equals arg1="${composer.type}" arg2="bundle"/><then>
-            <package format="zip" dir="${targetPath}/release" file="release.zip" log="release.zip.log" sha1="true" />
+            <package format="zip" dir="${targetPath}/release" latest="${private.repository.upload.latest.release}" file="release.zip" log="release.zip.log" sha1="true" />
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="library"/><then>
-            <package format="zip" dir="${targetPath}/release" file="release.zip" log="release.zip.log" sha1="true" />
+            <package format="zip" dir="${targetPath}/release" latest="${private.repository.upload.latest.release}" file="release.zip" log="release.zip.log" sha1="true" />
         </then></if>
 
         <if><equals arg1="${composer.type}" arg2="project"/><then>
-            <package format="tgz" dir="${targetPath}/release" file="release.tar.gz" log="release.tar.gz.log" sha1="true" />
+            <package format="tgz" dir="${targetPath}/release" latest="${private.repository.upload.latest.release}" file="release.tar.gz" log="release.tar.gz.log" sha1="true" />
         </then></if>
     </target>
 

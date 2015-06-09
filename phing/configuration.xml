@@ -13,6 +13,8 @@
     <property name="private.repository" value="false"/>
     <property name="private.repository.driver" value=""/>
     <property name="private.dependencies.regex" value=""/>
+    <property name="private.repository.upload.latest.build" value="false"/>
+    <property name="private.repository.upload.latest.release" value="false"/>
 
     <property name="s3.build.bucket.path" value=""/>
     <property name="s3.release.bucket.path" value=""/>
