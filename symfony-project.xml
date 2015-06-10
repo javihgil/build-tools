@@ -39,9 +39,11 @@
         <call target="composer_project.test" required="true" />
 
         <if><istrue value="${symfony.test.securitychecker}"/><then>
-            <!-- test composer dependencies security, and fail build if some security vulnerability is found -->
-            <echo message="Symfony security-checker command" />
-            <exec command="vendor/bin/security-checker security:check composer.lock" checkreturn="${symfony.test.securitychecker.failbuild}" passthru="true" />
+            <if><equals arg1="${composer.type}" arg2="project"/><then>
+                <!-- test composer dependencies security, and fail build if some security vulnerability is found -->
+                <echo message="Symfony security-checker command" />
+                <exec command="vendor/bin/security-checker security:check composer.lock" checkreturn="${symfony.test.securitychecker.failbuild}" passthru="true" />
+            </then></if>
         </then></if>
     </target>
 
