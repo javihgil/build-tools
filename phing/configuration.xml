@@ -34,6 +34,10 @@
     <property name="test.phpunit.failbuild" value="true"/>
     <property name="test.phpunit.junit.target" value="${targetPath}/reports/junit.xml"/>
 
+    <!-- symfony security-checker tests -->
+    <property name="symfony.test.securitychecker" value="true"/>
+    <property name="symfony.test.securitychecker.failbuild" value="true"/>
+
     <fileset id="test.phpfiles" dir=".">
         <exclude name="app/cache/**"/>
         <exclude name="vendor/**"/>

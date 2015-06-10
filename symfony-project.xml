@@ -34,6 +34,17 @@
               failbuild="${test.phpunit.failbuild}"/>
     </target>
 
+    <target name="test" description="Tests project">
+        <!-- call parent test target -->
+        <call target="composer_project.test" required="true" />
+
+        <if><istrue value="${symfony.test.securitychecker}"/><then>
+            <!-- test composer dependencies security, and fail build if some security vulnerability is found -->
+            <echo message="Symfony security-checker command" />
+            <exec command="vendor/bin/security-checker security:check composer.lock" checkreturn="${symfony.test.securitychecker.failbuild}" passthru="true" />
+        </then></if>
+    </target>
+
     <target name="-build-install" hidden="true">
         <call target="composer_project.-build-install" required="true" />
 
