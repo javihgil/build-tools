@@ -34,14 +34,14 @@
     </target>
 
     <target name="release" depends="-release-check, build">
-        <call target="-release-tag" required="true"/>
-
         <modulei action="phing" modulesrefid="modules" task="module-release">
             <arg value="-Drelease.version=${release.version}"/>
             <arg value="-Drelease.next.version=${release.next.version}"/>
         </modulei>
         <modulei action="summary" />
         <modulei action="failatend" />
+
+        <call target="-release-tag" required="true"/>
 
         <modulei action="phing" modulesrefid="modules" task="release-next-version">
             <arg value="-Drelease.next.version=${release.next.version}"/>
